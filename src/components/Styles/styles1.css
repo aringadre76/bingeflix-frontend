@@ -1,0 +1,87 @@
+.linkStyle {
+    display: flex;
+    align-items: 'center';
+    padding: 10px 30px;
+    background-color: #03162b;
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+  .scrollable-div {
+    width: 300px; /* Set desired width */
+    height: 200px; /* Set desired height */
+    overflow: auto; /* Enable scrolling */
+    border: 1px solid #ccc; /* Optional: Add border for visibility */
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .hide-on-iphone {
+      display: none;
+    }
+  }
+  .mirrored {
+    /* Mirror the image */
+    transform: scaleX(-1) scaleY(-1);
+  }
+
+  .rectangle1 {
+    z-index: 120;
+    width: 100%;
+    height: 100vh;
+    background-color: #333; /* dark gray color */
+  }
+
+  .menu {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    background-color: #333;
+    color: #fff;
+    transition: left 0.3s ease;
+  }
+  
+  .menu.open {
+    left: 0;
+  }
+  
+  .button {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #6c4d00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .popup-content button {
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
