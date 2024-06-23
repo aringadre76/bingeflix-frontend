@@ -6,7 +6,8 @@ function Search({ onSearchComplete, onSearchTitle, onSearchShowType }) {
 
     const handleSearch = async (event) => {
         event.preventDefault(); // Prevent the form from causing a page reload
-        const response = await fetch('http://localhost:4000/getLink', {
+    
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/injectTest`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

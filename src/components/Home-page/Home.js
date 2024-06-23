@@ -11,7 +11,7 @@ import SportsPage from './SportsPage';
 
 
 const fetchUserMovies = async () => {
-    const url = 'http://localhost:4000/getUserMovies';
+    const url = `${process.env.REACT_APP_BACKEND_URL}/getUserMovies`;
 
     try {
         const response = await fetch(url, {
@@ -43,7 +43,7 @@ const fetchUserMovies = async () => {
 
 
 const fetchUserRecs = async (update = false) => {
-    const url = update ? 'http://localhost:4000/getUserRecs?update=true' : 'http://localhost:4000/getUserRecs';
+    const url = update ? `${process.env.REACT_APP_BACKEND_URL}/getUserRecs?update=true` : `${process.env.REACT_APP_BACKEND_URL}/getUserRecs`;
 
     try {
         const response = await fetch(url, {
@@ -66,7 +66,7 @@ const fetchUserRecs = async (update = false) => {
 };
 
 const removeMovie = async (movieTitle) => {
-    const url = 'http://localhost:4000/removeMovie';
+    const url = `${process.env.REACT_APP_BACKEND_URL}/removeMovie`;
     const data = {
         movieTitle
     };

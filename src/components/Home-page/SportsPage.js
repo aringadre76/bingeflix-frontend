@@ -4,7 +4,7 @@ import SportsSearch from './SportsSearch';
 const getUserSports = async () => {
   console.log("Get user sports called");
 
-  const url = 'http://localhost:4000/getUserSports';
+  const url = `${process.env.REACT_APP_BACKEND_URL}/getUserSports`;
 
   try {
     const response = await fetch(url, {
@@ -39,7 +39,7 @@ const removeSport = async (teamName, logo, link) => {
   console.log("REMOVE SPORT:", logo );
   console.log("REMOVE SPORT:", link );
 
-  const url = 'http://localhost:4000/removeSport';
+  const url = `${process.env.REACT_APP_BACKEND_URL}/removeSport`;
   const data = {
       sportTitle: teamName
   };

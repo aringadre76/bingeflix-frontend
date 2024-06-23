@@ -22,7 +22,7 @@ const ConditionalComponent = ({ path, children }) => {
 };
 
 const injectMovie = async (userName, email, moviesList, linkie) => {
-  const url = 'http://localhost:4000/injectTest';
+  const url = `${process.env.REACT_APP_BACKEND_URL}/injectTest`;
   const data = {
     userName,
     email,

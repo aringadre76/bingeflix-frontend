@@ -2,20 +2,21 @@ import React from 'react';
 import Footer from '../Footer';
 
 const LandingPage = () => {
-  return (    
+  return (
 
     <div>
-      
-      <div className = "relative">
-        <div className = "absolute top-0 left-0 z-10 m-4">
+
+      <div className="relative">
+        <div className="absolute top-0 left-0 z-10 m-4">
           <h1 className="text-white text-2xl font-bold">
             BINGEFLIX
           </h1>
         </div>
         <div className="absolute top-0 right-7 z-10 m-4">
-        <a href="http://localhost:4000/auth/google" className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
-            Login
-        </a>
+          <a href={`${process.env.BACKEND_URL}/auth/google`} className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
+             login 1
+          </a>
+
         </div>
       </div>
 
