@@ -13,12 +13,16 @@ const WatchlistCard = ({ item, editItem, deleteItem }) => {
       setImage(posterUrl);
     };
     fetchImage();
-  }, [item.title]);
+
+    // Reset description when item changes
+    setDescription(null);
+    setShowDescription(false);
+  }, [item.title]); // Add dependency on item.title to re-fetch when recommendations change
 
   const handleDescriptionToggle = async () => {
     if (!description) {
       const desc = await fetchDescription(item.title);
-      setDescription(desc);
+      setDescription(desc || item.reason || 'No description available'); // Use recommendation reason as fallback
     }
     setShowDescription(!showDescription);
   };
@@ -44,13 +48,15 @@ const WatchlistCard = ({ item, editItem, deleteItem }) => {
           {description || 'Loading description...'}
         </p>
       )}
-      <div className="absolute bottom-0 right-0 flex gap-2">
-        <button onClick={() => deleteItem(item)}>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
+      {deleteItem && (
+        <div className="absolute bottom-0 right-0 flex gap-2">
+          <button onClick={() => deleteItem(item)}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      )}
     </div>
   );
 };
