@@ -7,18 +7,31 @@ function Search({ onSearchComplete, onSearchTitle, onSearchShowType }) {
     const handleSearch = async (event) => {
         event.preventDefault(); // Prevent the form from causing a page reload
     
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/injectTest`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ searchText: searchInput })
-        });
-        const data = await response.json();
-        console.log("data: " + data)
-        onSearchComplete(data.link); // Assuming the backend sends back an object with a 'msg' property
-        onSearchTitle(data.name);
-        onSearchShowType(data.showType); // Pass the showType to the parent
+        try {
+            // First get the streaming link
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getLink`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ searchText: searchInput })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("Search result:", data);
+
+            // Pass the data back to parent component
+            onSearchComplete(data.link);
+            onSearchTitle(data.name);
+            onSearchShowType(data.showType);
+        } catch (error) {
+            console.error('Search error:', error);
+        }
     };
 
     return (
@@ -28,6 +41,7 @@ function Search({ onSearchComplete, onSearchTitle, onSearchShowType }) {
                 name="query"
                 placeholder="Search..."
                 className="bg-gray-700 text-white px-4 py-2 w-full rounded-lg focus:outline-none focus:shadow-outline pr-10"
+                value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
             />
         </form>
