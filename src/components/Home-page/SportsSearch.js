@@ -90,14 +90,14 @@ const SportsSearch = ({ addToWatchlist }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <p className="text-xl font-bold">Sports</p>
-      <form className="w-full max-w-md" onSubmit={handleSearch}>
-        <div className="flex items-center border-b border-b-2 border-teal-500 py-2">
+    <div className="flex flex-col items-center justify-center p-4">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Search for Teams</h2>
+      <form className="w-full max-w-md mb-6" onSubmit={handleSearch}>
+        <div className="flex items-center border-2 border-blue-200 rounded-lg py-3 px-4 bg-white shadow-sm focus-within:border-blue-400 focus-within:shadow-md transition-all duration-200">
           <input
             type="text"
-            className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-            placeholder="Enter team name"
+            className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none text-lg"
+            placeholder="Enter team name (e.g., Lakers, Patriots)"
             value={query}
             onChange={handleInputChange}
             onKeyDown={(e) => {
@@ -107,22 +107,30 @@ const SportsSearch = ({ addToWatchlist }) => {
             }}
           />
           <button
-            type="button"
-            onClick={handleAddToWatchlist}
-            className="flex-shrink-0 bg-blue-500 hover:bg-blue-700 text-white text-sm py-1 px-2 rounded"
-            disabled={!result || !logo}
+            type="submit"
+            className="flex-shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
           >
-            Add to Watchlist
+            Search
           </button>
         </div>
       </form>
+      
       {result && (
-        <div className="mt-4">
+        <div className="w-full max-w-md">
           {logo && (
-            <div className="mt-4">
-              <a href={result} target="_blank" rel="noreferrer">
-                <img src={logo} alt="Team Logo" className="w-32 h-32 object-contain" />
-              </a>
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">Found Team</h3>
+              <div className="text-center mb-4">
+                <img src={logo} alt="Team Logo" className="w-32 h-32 object-contain mx-auto mb-4" />
+                <p className="text-gray-600 text-sm mb-4">Click the logo to visit the team's page</p>
+              </div>
+              <button
+                onClick={handleAddToWatchlist}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                disabled={!result || !logo}
+              >
+                Add to Watchlist
+              </button>
             </div>
           )}
         </div>
