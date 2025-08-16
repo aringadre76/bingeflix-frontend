@@ -38,6 +38,7 @@ const SportsSearch = ({ addToWatchlist }) => {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState(null);
   const [logo, setLogo] = useState(null);
+  const [firstResult, setFirstResult] = useState(null);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
@@ -58,16 +59,18 @@ const SportsSearch = ({ addToWatchlist }) => {
     try {
       const searchResponse = await fetch(searchUrl);
       const searchData = await searchResponse.json();
-      const firstResult = searchData.items && searchData.items[0];
+      const firstResultData = searchData.items && searchData.items[0];
 
       const imageResponse = await fetch(imageSearchUrl);
       const imageData = await imageResponse.json();
       const firstImage = imageData.items && imageData.items[0];
 
-      if (firstResult) {
-        setResult(firstResult.link);
+      if (firstResultData) {
+        setResult(firstResultData.link);
+        setFirstResult(firstResultData);
       } else {
         setResult('No results found');
+        setFirstResult(null);
       }
 
       if (firstImage) {
@@ -79,13 +82,27 @@ const SportsSearch = ({ addToWatchlist }) => {
       console.error('Error fetching data: ', error);
       setResult('An error occurred. Please try again later.');
       setLogo(null);
+      setFirstResult(null);
     }
   };
 
   const handleAddToWatchlist = () => {
     if (result && logo) {
-      addToWatchlist({ teamName: query, link: result, logo });
-      addSport(query, logo, result);
+      // Extract the actual team name from the API response instead of using the search query
+      let teamName = firstResult ? firstResult.title : query;
+      
+      // Clean up the team name by removing common website prefixes/suffixes
+      if (teamName) {
+        // Remove common prefixes like "ESPN", "MLB", "NFL", etc.
+        teamName = teamName.replace(/^(ESPN|MLB|NFL|NBA|NHL|NCAA)\s*/i, '');
+        // Remove common suffixes like " - ESPN", " | ESPN", etc.
+        teamName = teamName.replace(/\s*[-|]\s*(ESPN|MLB|NFL|NBA|NHL|NCAA).*$/i, '');
+        // Remove website URLs or extra text
+        teamName = teamName.replace(/\s*[-|]\s*.*$/i, '');
+      }
+      
+      addToWatchlist({ teamName: teamName, link: result, logo });
+      addSport(teamName, logo, result);
     }
   };
 
