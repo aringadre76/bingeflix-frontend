@@ -68,6 +68,10 @@ const SportsSearch = ({ addToWatchlist }) => {
       if (firstResultData) {
         setResult(firstResultData.link);
         setFirstResult(firstResultData);
+        
+        // Log the API response to see what we're getting
+        console.log('Search API Response:', searchData);
+        console.log('First Result:', firstResultData);
       } else {
         setResult('No results found');
         setFirstResult(null);
@@ -86,17 +90,41 @@ const SportsSearch = ({ addToWatchlist }) => {
     }
   };
 
+  const extractCleanTeamName = (title, query) => {
+    if (!title) return query;
+    
+    console.log('Extracting team name from:', title);
+    console.log('Original query:', query);
+    
+    // Try to extract just the team name from the title
+    let teamName = title;
+    
+    // Remove common prefixes
+    teamName = teamName.replace(/^(ESPN|MLB|NFL|NBA|NHL|NCAA)\s*/i, '');
+    
+    // Remove common suffixes and everything after them
+    teamName = teamName.replace(/\s*[-|]\s*(ESPN|MLB|NFL|NBA|NHL|NCAA).*$/i, '');
+    teamName = teamName.replace(/\s*[-|]\s*.*$/i, '');
+    
+    // Remove common words that indicate it's an article, not a team name
+    teamName = teamName.replace(/\s*(Scores?|Stats?|Highlights?|News|Updates?|Schedule|Roster|Standings?|Results?|Analysis|Preview|Recap|Report|Breaking|Latest|Today|This Week|Season|Playoffs?|Championship|Cup|League|Division|Conference|Tournament|Series|Game|Match|Race|Event).*$/i, '');
+    
+    // Remove extra whitespace and trim
+    teamName = teamName.replace(/\s+/g, ' ').trim();
+    
+    // If we ended up with nothing meaningful, fall back to the query
+    if (!teamName || teamName.length < 2) {
+      teamName = query;
+    }
+    
+    console.log('Extracted team name:', teamName);
+    return teamName;
+  };
+
   const handleAddToWatchlist = () => {
     if (result && logo) {
-      // Use the search query as the team name (like it was working before)
-      let teamName = query;
-      
-      // Just clean up the query a bit - capitalize first letter of each word
-      if (teamName) {
-        teamName = teamName.split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' ');
-      }
+      // Extract a clean team name from the API response
+      const teamName = extractCleanTeamName(firstResult?.title, query);
       
       addToWatchlist({ teamName: teamName, link: result, logo });
       addSport(teamName, logo, result);
