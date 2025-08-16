@@ -88,17 +88,14 @@ const SportsSearch = ({ addToWatchlist }) => {
 
   const handleAddToWatchlist = () => {
     if (result && logo) {
-      // Extract the actual team name from the API response instead of using the search query
-      let teamName = firstResult ? firstResult.title : query;
+      // Use the search query as the team name (like it was working before)
+      let teamName = query;
       
-      // Clean up the team name by removing common website prefixes/suffixes
+      // Just clean up the query a bit - capitalize first letter of each word
       if (teamName) {
-        // Remove common prefixes like "ESPN", "MLB", "NFL", etc.
-        teamName = teamName.replace(/^(ESPN|MLB|NFL|NBA|NHL|NCAA)\s*/i, '');
-        // Remove common suffixes like " - ESPN", " | ESPN", etc.
-        teamName = teamName.replace(/\s*[-|]\s*(ESPN|MLB|NFL|NBA|NHL|NCAA).*$/i, '');
-        // Remove website URLs or extra text
-        teamName = teamName.replace(/\s*[-|]\s*.*$/i, '');
+        teamName = teamName.split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+          .join(' ');
       }
       
       addToWatchlist({ teamName: teamName, link: result, logo });
