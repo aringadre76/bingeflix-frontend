@@ -47,8 +47,8 @@ const SportsSearch = ({ addToWatchlist }) => {
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    const newSEID = "942486b4223714211";
-    const newSearchAPI = "AIzaSyD4R1nD6HOBqPK_0e6wsmKkwLaAH4Lsapo";
+    const newSEID = process.env.REACT_APP_GOOGLE_CSE_ID;
+    const newSearchAPI = process.env.REACT_APP_GOOGLE_API_KEY;;
     const searchUrl = `https://www.googleapis.com/customsearch/v1?key=${newSearchAPI}&cx=${newSEID}&q=espn ${query}`;
     const imageSearchUrl = `https://www.googleapis.com/customsearch/v1?key=${newSearchAPI}&cx=${newSEID}&q=${query} logo&searchType=image`;
 
