@@ -176,22 +176,19 @@ const Home = () => {
     const deleteItem = async (item) => {
         const index = watchlist.indexOf(item);
         if (index !== -1) {
-            console.log("Deleting item:", item);  // Log the item that is about to be deleted
+            console.log("Deleting item:", item);
 
-            // Call the removeMovie API to delete the movie from the database
+            // Optimistically update local state immediately
+            const newWatchlist = watchlist.filter((_, i) => i !== index);
+            setWatchlist(newWatchlist);
+
+            // Call the removeMovie API in the background
             try {
-                const result = await removeMovie(item.title);
-                if (result && result.success) {
-                    console.log("Movie removed successfully from backend:", result.message);
-
-                    // Only update the local state if the backend update was successful
-                    const newWatchlist = watchlist.filter((_, i) => i !== index);
-                    setWatchlist(newWatchlist);
-                    const updatedRecs = await fetchUserRecs(true);
+                await removeMovie(item.title);
+                // Refresh recommendations in background (no await - doesn't block UI)
+                fetchUserRecs(true).then(updatedRecs => {
                     setRecsList(updatedRecs);
-                } else {
-                    console.log("Failed to remove the movie from the backend.");
-                }
+                });
             } catch (error) {
                 console.error("Error removing movie from backend:", error);
             }
