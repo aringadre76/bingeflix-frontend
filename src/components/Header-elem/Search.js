@@ -35,15 +35,24 @@ function Search({ onSearchComplete, onSearchTitle, onSearchShowType }) {
     };
 
     return (
-        <form id="search" className="flex-grow mx-4 relative" onSubmit={handleSearch}>
+        <form id="search" className="relative w-full" onSubmit={handleSearch}>
             <input
                 type="text"
                 name="query"
-                placeholder="Search..."
-                className="bg-gray-700 text-white px-4 py-2 w-full rounded-lg focus:outline-none focus:shadow-outline pr-10"
+                placeholder="Search movies & shows..."
+                className="bg-[#1a1a1a] text-white px-4 py-2.5 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e50914] border border-[#333] placeholder-gray-500"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
+                autoComplete="off"
             />
+            <button 
+                type="submit" 
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+            >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
         </form>
     );
 }

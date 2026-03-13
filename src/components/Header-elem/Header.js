@@ -87,7 +87,7 @@ const Header = ({ addToWatchlist }) => {
     };
 
     return (
-        <nav className="absolute top-0 z-10 w-full bg-transparent p-4">
+        <nav className="fixed top-0 z-50 w-full bg-transparent p-4">
             <div className="container mx-auto flex items-center justify-between flex-wrap">
                 {/* Clickable Website Logo */}
                 <a href="/home" className="flex items-center">
@@ -95,8 +95,10 @@ const Header = ({ addToWatchlist }) => {
                     <span className="text-white text-xl md:text-3xl font-semibold">BINGEFLIX</span>
                 </a>
 
-                {/* Search Bar, now with a proper callback for receiving the link */}
-                <Search onSearchComplete={handleLinkReceived} onSearchTitle={handleName} onSearchShowType={handleShowTypeReceived} />
+                {/* Search Bar - removed flex-grow to prevent overlap issues */}
+                <div className="mx-4 relative w-96">
+                    <Search onSearchComplete={handleLinkReceived} onSearchTitle={handleName} onSearchShowType={handleShowTypeReceived} />
+                </div>
 
                 {/* Display the link as a button if it exists */}
                 {link && areButtonsVisible && (
