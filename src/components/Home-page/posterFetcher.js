@@ -1,7 +1,6 @@
 const fetch = require('node-fetch');
 
-// Your TMDb API key
-const apiKey = '3b400d46d860ba7c351df26af82f99a8';
+const apiKey = process.env.REACT_APP_TMDB_API_KEY;
 
 // Function to search for the movie or TV show and get the correct ID
 async function searchMulti(title) {
