@@ -9,7 +9,7 @@ const addSport = async (sportName, logo, link) => {
       link
     }
   };
-  console.log("DATA INSIDE OF addSPORT:", data);
+
 
   try {
     const response = await fetch(url, {
@@ -47,12 +47,8 @@ const SportsSearch = ({ addToWatchlist }) => {
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    const apiKey = 'AIzaSyA8te_WA4Hitv1gAO_GCcaTQkuWfZjZSoc';
-    const searchEngineId = '91375e072088c4407';
-    const secondKey = 'AIzaSyBv0uxTg2IxLTN-33EYnKD4bO-ANtcSMb8';
-    const secondSearchEngineId = '16b30ff74509e4a6f';
-    const newSEID = "942486b4223714211"
-    const newSearchAPI = "AIzaSyD4R1nD6HOBqPK_0e6wsmKkwLaAH4Lsapo"
+    const newSEID = "942486b4223714211";
+    const newSearchAPI = "AIzaSyD4R1nD6HOBqPK_0e6wsmKkwLaAH4Lsapo";
     const searchUrl = `https://www.googleapis.com/customsearch/v1?key=${newSearchAPI}&cx=${newSEID}&q=espn ${query}`;
     const imageSearchUrl = `https://www.googleapis.com/customsearch/v1?key=${newSearchAPI}&cx=${newSEID}&q=${query} logo&searchType=image`;
 
@@ -69,9 +65,7 @@ const SportsSearch = ({ addToWatchlist }) => {
         setResult(firstResultData.link);
         setFirstResult(firstResultData);
         
-        // Log the API response to see what we're getting
-        console.log('Search API Response:', searchData);
-        console.log('First Result:', firstResultData);
+
       } else {
         setResult('No results found');
         setFirstResult(null);
@@ -90,11 +84,8 @@ const SportsSearch = ({ addToWatchlist }) => {
     }
   };
 
-  const extractCleanTeamName = (title, query) => {
-    if (!title) return query;
-    
-    console.log('Extracting team name from:', title);
-    console.log('Original query:', query);
+    const extractCleanTeamName = (title, query) => {
+        if (!title) return query;
     
     // Try to extract just the team name from the title
     let teamName = title;
@@ -112,12 +103,10 @@ const SportsSearch = ({ addToWatchlist }) => {
     // Remove extra whitespace and trim
     teamName = teamName.replace(/\s+/g, ' ').trim();
     
-    // If we ended up with nothing meaningful, fall back to the query
     if (!teamName || teamName.length < 2) {
       teamName = query;
     }
     
-    console.log('Extracted team name:', teamName);
     return teamName;
   };
 
