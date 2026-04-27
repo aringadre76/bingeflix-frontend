@@ -109,9 +109,10 @@ const WatchlistCard = ({ item, editItem, deleteItem, index }) => {
           <button
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               deleteItem(item);
             }}
-            className={`absolute top-3 right-3 p-2 rounded-full glass delete-btn ${
+            className={`absolute top-3 right-3 z-30 p-2 rounded-full glass delete-btn ${
               isHovered ? 'opacity-100' : 'opacity-0'
             }`}
             title="Remove from watchlist"
@@ -134,13 +135,10 @@ const WatchlistCard = ({ item, editItem, deleteItem, index }) => {
         )}
 
         {/* Play Button on Hover */}
-        <a 
-          href={item.url}
-          target="_blank"
-          rel="noopener noreferrer"
+        <div
           className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
             isHovered ? 'opacity-100' : 'opacity-0'
-          }`}
+          } pointer-events-none`}
         >
           <div className="w-16 h-16 rounded-full bg-[#e50914]/90 flex items-center justify-center hover:bg-[#e50914] hover:scale-110 transition-all duration-300">
             <svg 
@@ -151,7 +149,7 @@ const WatchlistCard = ({ item, editItem, deleteItem, index }) => {
               <path d="M8 5v14l11-7z" />
             </svg>
           </div>
-        </a>
+        </div>
       </div>
 
       {/* Card Content */}
