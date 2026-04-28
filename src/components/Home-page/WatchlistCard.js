@@ -66,14 +66,14 @@ const WatchlistCard = ({ item, editItem, deleteItem, index }) => {
             <div 
               className={`absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent transition-opacity duration-300 ${
                 isHovered ? 'opacity-100' : 'opacity-0'
-              }`}
+              } pointer-events-none`}
             />
             
             {/* Red Glow Effect on Hover */}
             <div 
               className={`absolute inset-0 border-2 border-[#e50914] transition-opacity duration-300 ${
                 isHovered ? 'opacity-100' : 'opacity-0'
-              }`}
+              } pointer-events-none`}
               style={{ boxShadow: isHovered ? 'inset 0 0 30px rgba(229, 9, 20, 0.3)' : 'none' }}
             />
           </>
@@ -177,9 +177,9 @@ const WatchlistCard = ({ item, editItem, deleteItem, index }) => {
 
         {/* Description */}
         <div 
-          className={`expand-content ${showDescription ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
+          className={`expand-content ${showDescription ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}`}
         >
-          <p className="text-xs text-gray-400 leading-relaxed line-clamp-4">
+          <p className="text-xs text-gray-400 leading-relaxed whitespace-pre-line overflow-y-auto pr-1 max-h-60">
             {description || 'Loading description...'}
           </p>
         </div>
